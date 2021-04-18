@@ -1,17 +1,12 @@
 ﻿@{
-    ViewData["Title"] = "Let`s chat";
+    ViewData["Title"] = "Welcome";
 }
-<style>
-    button{
-        width: 100%;
-        display: block;
-    }
-</style>
+
 <link rel="stylesheet" href="~/css/my.css" />
 <body>
     <div class="mydiv-index">
         <p class="myp-index">MyChat</p><br />
-        <form class="myform-index" action ="@Url.Action("Login","Account")" method="get">
+        <form class="myform-index" action ="@Url.Action("Login","Account")" method="get" style="width: 100%">
             <button type="submit" class="btn btn-primary">Начать общаться</button> <br />
         </form>
     </div>

@@ -10,7 +10,7 @@ namespace MyChat.Models
 
         [Required(ErrorMessage = "Обязательное поле")]
         [DataType(DataType.EmailAddress)]
-        [Display(Name = "Ваш email")]
+        [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Обязательное поле")]

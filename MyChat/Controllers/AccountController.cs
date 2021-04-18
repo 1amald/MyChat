@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyChat.Data;
 using MyChat.Models;
@@ -32,7 +33,7 @@ namespace MyChat.Controllers
             }
             else
             {
-                u= db.Users.FirstOrDefault(user => user.Id == model.LoginOrEmail);
+                u= db.Users.FirstOrDefault(user => user.UserName == model.LoginOrEmail);
             }
             if (u != null)
             {
@@ -69,6 +70,7 @@ namespace MyChat.Controllers
             }
             return View("Register",model);
         }
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
@@ -92,6 +94,12 @@ namespace MyChat.Controllers
                 return RedirectToAction("Profile", "Home");
             }
             return View("Login");
+        }
+        [Authorize]
+        [HttpGet]
+        public IActionResult Settings()
+        {
+            return View("Settings");
         }
     }
 }

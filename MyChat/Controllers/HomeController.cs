@@ -22,7 +22,7 @@ namespace MyChat.Controllers
             um = userManager;
         }
 
-
+        [Route("/welcome")]
         public IActionResult Welcome()
         {
             return View("Welcome");
