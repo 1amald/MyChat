@@ -1,0 +1,26 @@
+﻿@model MyChat.Models.Account.LoginModel
+
+@{
+    ViewData["Title"] = "Login Page";
+}
+
+<link rel="stylesheet" href="~/css/my.css" />
+<div class="mydiv">
+    <form asp-controller="Account" asp-action="Login" class="form-group form-group-sm" method="post">
+        <div class="error-div" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group">
+            <label asp-for="LoginOrEmail"></label>
+            <input asp-for="LoginOrEmail" class="form-control" id="login" placeholder="Никнейм или Email">
+        </div>
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" placeholder="Пароль">
+        </div>
+        <div class="form-group">
+            <input asp-for="RememberMe" />
+            <label asp-for="RememberMe"></label>
+        </div>
+        <button type="submit" class="btn btn-primary">Войти</button>
+        <a class="mya" asp-controller="Account" asp-action="Register">У меня нет аккаунта</a>
+    </form>
+</div>

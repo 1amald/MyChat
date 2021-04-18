@@ -1,0 +1,36 @@
+﻿@model MyChat.Models.RegisterModel
+@{
+    ViewData["Title"] = "Register Page";
+}
+
+<link rel="stylesheet" href="~/css/my.css" />
+
+<div class="mydiv">
+    <form class="form-group form-group-sm" method="post" asp-controller="Account" asp-action="Register">
+        <div class= "error-div" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group">
+            <label asp-for="UserName"></label>
+            <input asp-for="UserName" class="form-control" id="login" placeholder="Имя">
+            <span asp-validation-for="UserName"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" placeholder="Email">
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" placeholder="Пароль">
+            <span asp-validation-for="Password"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="PasswordConfirm"></label>
+            <input asp-for="PasswordConfirm" class="form-control" placeholder="Повторите пароль">
+            <span asp-validation-for="PasswordConfirm"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Создать аккаунт</button>
+        <a class = "mya" asp-controller="Account" asp-action="Login">Уже есть аккаунт</a>
+    </form>
+</div>
+

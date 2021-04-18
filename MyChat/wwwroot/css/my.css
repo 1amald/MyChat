@@ -1,0 +1,50 @@
+﻿form{
+    width: 300px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.btn-primary {
+    width: 100%;
+}
+
+.mydiv {
+    width: 600px;
+    margin: auto;
+    display: flex;
+    padding: 50px;
+    border-radius: 15px;
+    border-style: solid;
+    border-color: darkgray;
+    margin-top: 150px;
+}
+
+.mya {
+    margin: auto;
+    margin-top: 5px;
+}
+
+span{
+    color: red;
+}
+
+.error-div{
+    color: red;
+}
+
+.mydiv-index {
+    margin: auto;
+    margin-top: 150px;
+    width: 50%;
+}
+
+.myp-index{
+    font-size: 100px;
+    display: block;
+    text-align: center;
+}
+.myform-index{
+    display: block;
+}
