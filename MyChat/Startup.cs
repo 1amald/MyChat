@@ -33,7 +33,7 @@ namespace MyChat
                 opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре
                 opts.Password.RequireDigit = false;
                 opts.User.RequireUniqueEmail = true;
-                opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_.1234567890";
+                opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz-_.1234567890";
             })
                 .AddEntityFrameworkStores<AppDbContext>();
             services.AddControllersWithViews();

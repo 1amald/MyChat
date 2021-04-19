@@ -1,9 +1,20 @@
-﻿@model MyChat.Models.User
+﻿@model MyChat.Data.User
 
 @{
     ViewData["Title"] = "Profile";
 }
 
 
+
+
 <h1>Profile</h1>
 <h1>@Model.NormalizedUserName</h1>
+@if (Model.AvatarPath == null)
+{
+    @: <p>Net avatarki</p>
+}
+else
+{
+    @: <img class="avatar" src="/Avatars/@Model.AvatarPath" alt="TI MENYA PONIMAESH" />
+}
+<h1>@Model.Status</h1>

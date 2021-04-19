@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MyChat.Data;
 using MyChat.Models;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,6 @@ namespace MyChat.Controllers
             um = userManager;
         }
 
-        [Route("/welcome")]
         public IActionResult Welcome()
         {
             return View("Welcome");
