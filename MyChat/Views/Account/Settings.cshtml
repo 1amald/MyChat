@@ -1,23 +1,24 @@
-﻿<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
-<script src="~/croppie/croppie.min.js"></script>
-<link rel="stylesheet" href="~/croppie/croppie.css">
+﻿<script src="~/js/croppie.min.js"></script>
+<link rel="stylesheet" href="~/css/croppie.css">
 
 <div id="page" style="border-style:solid; border-color: red">
     <div id="demo-basic" style="border-style:solid; border-color: red; width: 500px; height: 500px;">
     </div>
 </div>
 
+
 <script>
-      $(function() {
-  var basic = $('#demo-basic').croppie({
-    viewport: {
-      width: 200,
-      height: 200
-    }
-  });
-  basic.croppie('bind', {
-    url: 'https://i.imgur.com/xD9rzSt.jpg',
-    points: [100, 100, 100, 100]
-  });
-});
+    $(function () {
+        var basic = $('#demo-basic').croppie({
+            viewport: {
+                width: 200,
+                height: 200
+            }
+        });
+        basic.croppie('bind', {
+            url: 'https://i.imgur.com/xD9rzSt.jpg'
+        });
+    });
 </script>
+
+
