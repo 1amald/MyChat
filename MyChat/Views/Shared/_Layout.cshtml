@@ -6,13 +6,23 @@
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/my.css" />
+    <link rel="stylesheet" href="~/css/my.css"/>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Chat">MyChat</a>
+                <div style="display: flex; flex-direction: row; justify-content: space-around">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Chat">MyChat</a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <form class="form-inline my-2 my-lg-0" action="@Url.Action("Profile","Home")" method="get" style="display: inline">
+                            <input required class="form-control mr-sm-2" type="search" name="name" placeholder="Введите ник" />
+                            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" style="width: 70px;display:inline;">Найти</button>
+                        </form>
+                    }
+                </div>
                 <div>
                     @if (User.Identity.IsAuthenticated)
                     {
@@ -26,14 +36,11 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

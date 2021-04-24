@@ -1,24 +1,117 @@
-﻿<script src="~/js/croppie.min.js"></script>
+﻿@model MyChat.Models.Account.ChangePasswordPartial
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src="~/js/croppie.js"></script> 
 <link rel="stylesheet" href="~/css/croppie.css">
 
-<div id="page" style="border-style:solid; border-color: red">
-    <div id="demo-basic" style="border-style:solid; border-color: red; width: 500px; height: 500px;">
+
+<div class="settings-div">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Смена аватара</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div>
+                            <div id="main-cropper"></div>
+                            <a class="button btn btn-primary btn-block actionSelect">
+                                <input type="file" id="select" value="Choose Image" accept="image/*">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary btn-block actionUpload" data-dismiss="modal">Сохранить и загрузить</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+    
+
+    <div class="settings-block">
+        <form class="form-group btn-block">
+            <p class="settings-text">Сменить статус</p>
+            <p>
+                <textarea class="form-control margin-top-5 btn-block" name="status" id="input"></textarea>
+            </p>
+            <button class="btn btn-primary btn-block margin-top-5" type="submit" id="sendBtn">Поменять статус</button>
+        </form>
+    </div>
+    <div class="settings-block">
+        <form class="form-group btn-block">
+            <p class="settings-text">Сменить Аватар</p>
+            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal">
+                Сменить аватар
+            </button>
+        </form>
+    </div>
+    <div class="settings-block">
+        <p class="settings-text">Сменить пароль</p>
+        <form class="form-group btn-block" method="post" asp-controller="Account" asp-action="ChangePassword">
+            <div class="form-group">
+                <input asp-for="CurrentPassword" class="form-control margin-top-5 btn-block" placeholder="Текущий пароль" />
+                <span asp-validation-for="CurrentPassword"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="NewPassword" class="form-control margin-top-5 btn-block" placeholder="Новый пароль" />
+                <span asp-validation-for="NewPassword"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="ConfirmPassword" class="form-control margin-top-5 btn-block" placeholder="Подтверждение пароля" />
+                <span asp-validation-for="ConfirmPassword"></span>
+            </div>
+
+            <button class="btn btn-primary btn-block margin-top-5">Сменить пароль</button>
+        </form>
+    </div>
+    <div class="settings-block">
+        <a class="btn btn-outline-danger btn-block" href="@Url.Action("Logout","Account")">Выйти из аккаунта</a>
+    </div>
+
+
+    <script>
+        var basic;
+        showCrop();
+        function showCrop() {
+            basic = $('#main-cropper').croppie({
+                viewport: { width: 400, height: 400 },
+                boundary: { width: 450, height: 450 },
+                showZoomer: false
+            });
+        }
+        function readFile(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#main-cropper').croppie('bind', {
+                        url: e.target.result
+                    });
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $('.actionSelect input').on('change', function () { readFile(this); });
+        $('.actionUpload').on('click', function () {
+            basic.croppie('result', 'blob').then(async function (blob) {
+                var formData = new FormData();
+                formData.append('filename', 'test.jpg');
+                formData.append('blob', blob);
+                var request = new XMLHttpRequest();
+                request.open('POST', url);
+                request.send(formData);
+            });
+        });
+    </script>
 </div>
 
-
-<script>
-    $(function () {
-        var basic = $('#demo-basic').croppie({
-            viewport: {
-                width: 200,
-                height: 200
-            }
-        });
-        basic.croppie('bind', {
-            url: 'https://i.imgur.com/xD9rzSt.jpg'
-        });
-    });
-</script>
 
 

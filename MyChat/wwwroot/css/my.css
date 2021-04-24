@@ -1,10 +1,81 @@
-﻿.avatar {
-    vertical-align: middle;
+﻿.div-welcome{
+    margin: auto;
+    width: 400px;
+    height: 250px;
+    margin-top: 200px;
+}
+
+.div-login {
+    width: 60%;
+    margin: auto;
+    padding: 50px;
+    border-radius: 15px;
+    border-style: solid;
+    border-color: darkgray;
+    margin-top: 125px;
+}
+
+.div-register {
+    width: 60%;
+    margin: auto;
+    padding: 50px;
+    border-radius: 15px;
+    border-style: solid;
+    border-color: darkgray;
+    margin-top: 125px;
+}
+
+.div-profile {
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    width: 500px;
+    text-align: center;
+    padding-top: 100px;
+}
+
+.image-profile {
+    margin:auto;
     width: 400px;
     height: 400px;
     border-radius: 50%;
 }
 
+.div-under-profile {
+    margin: auto;
+    width: 500px;
+    border-radius: 10px;
+    background-color: rgb(227 242 252);
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.content{
+    border-style:solid;
+    border-color: darkgrey;
+    width: 100%;
+    height: 870px;
+    border-radius: 20px;
+}
+
+.profile-name{
+    margin: 10px;
+    font-size: 25px;
+    font-weight: 650;
+}
+.span-online{
+    font-size: 15px;
+    color: dimgrey;
+}
+.div-online{
+    background-color: green;
+    width: 10px;
+    height:10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
 form{
     width: 300px;
     margin: auto;
@@ -13,45 +84,105 @@ form{
     justify-content: center;
 }
 
-.btn-primary {
-    width: 100%;
-}
-
-.mydiv {
-    width: 600px;
+.settings-div{
+    width: 500px;
     margin: auto;
-    display: flex;
-    padding: 50px;
-    border-radius: 15px;
-    border-style: solid;
-    border-color: darkgray;
-    margin-top: 150px;
+}
+.settings-text {
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
 }
 
-.mya {
-    margin: auto;
-    margin-top: 5px;
-}
-
-span{
-    color: red;
+.settings-block{
+    margin-top:30px;
 }
 
 .error-div{
     color: red;
 }
 
-.mydiv-index {
-    margin: auto;
-    margin-top: 150px;
-    width: 400px;
-}
-
-.myp-index{
+.mychat-welcome{
     font-size: 100px;
     display: block;
     text-align: center;
 }
-.myform-index{
-    display: block;
+
+.background-chat {
+    display: flex;
+    flex-direction: column-reverse;
+    background-color: rgb(227 242 252);
+    width: 660px;
+    height: 800px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 15px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-style: solid;
+    border-width: 1px;
+    border-bottom: none;
+    border-color: deepskyblue;
+    margin: auto;
+    margin-top: 10px;
+    padding:15px 10px 10px 20px;
 }
+
+.row-chat {
+    padding: 3px 5px 3px 5px;
+    display:flex;
+    justify-content: left;
+    flex-direction: row;
+}
+
+.row-right-chat {
+    padding: 3px 5px 3px 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.image-chat{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.message-block-chat {
+    background-color: #007bff;
+    border-radius: 10px;
+    min-width: 100px;
+    max-width: 400px;
+    padding: 5px;
+    padding-right:10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.user-name-chat {
+    display: block;
+    font-size: 22px;
+    font-weight: 500;
+    color: white;
+    word-wrap: break-word;
+}
+
+.message-text-chat {
+    display: block;
+    font-size: 17px;
+    color: white;
+    font-weight: 400;
+    word-wrap: break-word;
+}
+
+.message-when-chat{
+    color: darkgray;
+}
+
+.link-user-name {
+    text-decoration: none;
+}
+
+
+

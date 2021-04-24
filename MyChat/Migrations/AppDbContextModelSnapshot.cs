@@ -150,7 +150,7 @@ namespace MyChat.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("MyChat.Models.User", b =>
+            modelBuilder.Entity("MyChat.Data.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -159,6 +159,7 @@ namespace MyChat.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("AvatarPath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -171,6 +172,9 @@ namespace MyChat.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastAction")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -199,12 +203,14 @@ namespace MyChat.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -221,6 +227,31 @@ namespace MyChat.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("MyChat.Data.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("SenderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("When")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SenderName");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -232,7 +263,7 @@ namespace MyChat.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("MyChat.Models.User", null)
+                    b.HasOne("MyChat.Data.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -241,7 +272,7 @@ namespace MyChat.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("MyChat.Models.User", null)
+                    b.HasOne("MyChat.Data.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -256,7 +287,7 @@ namespace MyChat.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MyChat.Models.User", null)
+                    b.HasOne("MyChat.Data.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -265,11 +296,28 @@ namespace MyChat.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("MyChat.Models.User", null)
+                    b.HasOne("MyChat.Data.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MyChat.Data.Message", b =>
+                {
+                    b.HasOne("MyChat.Data.AppUser", "Sender")
+                        .WithMany("Messages")
+                        .HasForeignKey("SenderName")
+                        .HasPrincipalKey("UserName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("MyChat.Data.AppUser", b =>
+                {
+                    b.Navigation("Messages");
                 });
 #pragma warning restore 612, 618
         }

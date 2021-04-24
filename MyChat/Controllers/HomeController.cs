@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MyChat.Data;
 using MyChat.Models;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,12 +15,14 @@ namespace MyChat.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly UserManager<User> um;
+        private readonly UserManager<AppUser> um;
+        private AppDbContext db;
 
-        public HomeController(ILogger<HomeController> logger,UserManager<User> userManager)
+        public HomeController(ILogger<HomeController> logger,UserManager<AppUser> userManager,AppDbContext context)
         {
             _logger = logger;
             um = userManager;
+            db = context;
         }
 
         public IActionResult Welcome()
@@ -31,7 +33,7 @@ namespace MyChat.Controllers
         [Authorize]
         public IActionResult Profile(string name)
         {
-            User u;
+            AppUser u;
             if(name == null)
             {
                 u = um.FindByNameAsync(User.Identity.Name).Result;
@@ -47,10 +49,29 @@ namespace MyChat.Controllers
             return View("Profile",u);
         }
 
-        [Authorize]
-        public IActionResult Chat()
+        public IActionResult Test()
         {
-            return View("Chat");
+            var mes =db.Messages;
+            foreach(var m in mes)
+            {
+                string un = m.Sender.UserName;
+            }
+            return Ok();
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Chat()
+        {
+            var messages = db.Messages.OrderByDescending(m=> m.When).Take(30).Include(m=> m.Sender);
+            return View("Chat",messages);
+        }
+        public async Task<IActionResult> Create(string sender, string text,string when)
+        {
+            var u = await um.GetUserAsync(User);
+            Message m = new Message(u, text);
+            db.Messages.Add(m);
+            await db.SaveChangesAsync();
+            return Ok();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

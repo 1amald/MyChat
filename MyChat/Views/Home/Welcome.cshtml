@@ -2,14 +2,13 @@
     ViewData["Title"] = "Welcome";
 }
 
-<link rel="stylesheet" href="~/css/my.css" />
-<body>
-    <div class="mydiv-index">
-        <p class="myp-index">MyChat</p><br />
-        <form class="myform-index" action ="@Url.Action("Login","Account")" method="get" style="width: 100%;">
-            <button type="submit" class="btn btn-primary" style="width:100%;">Начать общаться</button> <br />
-        </form>
-    </div>
-</body>
+
+<div class="div-welcome">
+    <p class="mychat-welcome">MyChat</p><br />
+    <form class="btn-block" action="@Url.Action("Login","Account")" method="get">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Начать общаться</button> <br />
+    </form>
+</div>
+
 
 
