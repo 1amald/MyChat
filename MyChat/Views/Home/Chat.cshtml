@@ -33,98 +33,15 @@
 
         }
     }
-
 </div>
 <div style="display: flex;justify-content: center;margin:auto">
     <textarea class="form-control" style="width: 558px; height: 50px;" placeholder="Введите сообщение" id="message"></textarea>
     <button type="submit" class="btn btn-primary" style="margin-left:2px;" id="sendBtn">Отправить</button>
 </div>
 
-
 <script src="/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
 <script>
     const currentUserName = '@User.Identity.Name';
 </script>
-<script>
-    const chatroom = document.getElementById('chatroom');
-    const connection = new signalR.HubConnectionBuilder()
-        .withUrl('/chat')
-        .build();
-
-    connection.on('Send', function (userName, messageText,avatarPath) {
-        var currentdate = new Date();
-        let dateString = currentdate.toLocaleString('ru-RU', { hour: 'numeric', minute: 'numeric', hour12: false });
-        //перечисление элементов сообщения
-        let row = document.createElement('div');
-        let img = document.createElement('img');
-        let messageBlock = document.createElement('div');
-        let divUserName = document.createElement('div');
-        let spanForUserName = document.createElement('span');
-        let spanForText = document.createElement('span');
-        let spanWhen = document.createElement('span');
-        let aImg = document.createElement('a');
-        let aUserName = document.createElement('a');
-
-        messageBlock.className = 'message-block-chat';//классы, которые не зависят от userName == currentUserName
-        divUserName.className = 'user-name-chat';
-        spanForText.className = 'message-text-chat';
-        spanWhen.className = 'message-when-chat';
-
-        spanForText.innerHTML = messageText;
-        spanWhen.innerHTML = dateString;
-
-        messageBlock.appendChild(divUserName);
-        divUserName.appendChild(spanForUserName);
-        messageBlock.appendChild(spanForText);
-        
-
-        if (userName == currentUserName) {
-            row.className = 'row-right-chat';
-            row.appendChild(spanWhen);
-            row.appendChild(messageBlock);
-            spanForUserName.innerHTML = 'Вы';
-        }
-        else {
-            row.className = 'row-chat';
-            aImg.href = 'https://localhost:44354/Home/Profile?name=' + userName;;
-            aImg.appendChild(img);
-            row.appendChild(aImg);
-            row.appendChild(messageBlock);
-            row.appendChild(spanWhen);
-            spanForUserName.innerHTML = userName;
-            img.src = avatarPath;
-            img.className = 'image-chat';
-        }
-
-        var firstChild = chatroom.firstChild;
-        chatroom.insertBefore(row, firstChild);
-
-        /*var dateString = (currentdate.getMonth() + 1) + "/"
-            + currentdate.getDate() + "/"
-            + currentdate.getFullYear() + " "
-            + currentdate.toLocaleString('ru-RU', { hour: 'numeric', minute: 'numeric', hour12: false })*/
-        var formData = new FormData();
-        formData.append('sender', userName);
-        formData.append('text', messageText);
-        formData.append('when', dateString)
-        var request = new XMLHttpRequest();
-        request.open('POST','@Url.Action("Create","Home")');
-        request.send(formData);
-    });
-
-    document.getElementById("sendBtn").addEventListener("click", function (e) {
-        let input = document.getElementById("message")
-        let message = input.value;
-        if (message == '') {
-            return;
-        }
-        input.value = '';
-        connection.invoke("Send", currentUserName, message);
-    });
-
-    connection.start()
-        .catch(error => {
-        console.error(error.message);
-    });
-</script>
+<script src="~/js/signalRR.js"></script>
 

@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.SignalR;
 using MyChat.Data;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using System.Security.Claims;
 
 namespace MyChat.Models
 {

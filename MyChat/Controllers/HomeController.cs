@@ -65,7 +65,7 @@ namespace MyChat.Controllers
             var messages = db.Messages.OrderByDescending(m=> m.When).Take(30).Include(m=> m.Sender);
             return View("Chat",messages);
         }
-        public async Task<IActionResult> Create(string sender, string text,string when)
+        public async Task<IActionResult> Create(string name, string text)
         {
             var u = await um.GetUserAsync(User);
             Message m = new Message(u, text);
