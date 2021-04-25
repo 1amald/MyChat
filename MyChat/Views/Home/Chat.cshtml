@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<MyChat.Data.Message>
-
+@{ 
+}
 <div class="background-chat" id="chatroom">
     @if (Model != null)
     {
@@ -39,9 +40,22 @@
     <button type="submit" class="btn btn-primary" style="margin-left:2px;" id="sendBtn">Отправить</button>
 </div>
 
-<script src="/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
 <script>
     const currentUserName = '@User.Identity.Name';
+    let messagesOnPage = 0;
 </script>
-<script src="~/js/signalRR.js"></script>
+<script src="~/js/dist/browser/signalr.min.js"></script>
+<script src="~/js/signalrConnection.js"></script>
+<script src="~/js/chat.js"></script>
+
+<script>
+    let chatWindow = document.getElementById("chatroom");
+
+    chatWindow.addEventListener('scroll', function () {
+        if (chatWindow.scrollHeight + chatWindow.scrollTop - chatWindow.clientHeight <1) {
+            GetMoreMessages();
+        }
+    });
+</script>
+
 

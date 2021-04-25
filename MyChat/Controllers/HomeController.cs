@@ -6,8 +6,10 @@ using Microsoft.Extensions.Logging;
 using MyChat.Data;
 using MyChat.Models;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace MyChat.Controllers
@@ -49,26 +51,26 @@ namespace MyChat.Controllers
             return View("Profile",u);
         }
 
-        public IActionResult Test()
+        public async Task<JsonResult> GetMoreMessages(int skipCount, int takeCount)
         {
-            var mes =db.Messages;
-            foreach(var m in mes)
-            {
-                string un = m.Sender.UserName;
-            }
-            return Ok();
+            var messages = db.Messages.OrderByDescending(m => m.When).Skip(skipCount).Take(takeCount);
+            var result = from m in messages
+                         join u in db.Users on m.SenderName equals u.UserName
+                         select new { senderName = m.SenderName, text = m.Text, shortDate = m.ShortDate, avatarPath = u.AvatarPath };
+                           
+            return Json(result);
         }
 
         [Authorize]
         public async Task<IActionResult> Chat()
         {
-            var messages = db.Messages.OrderByDescending(m=> m.When).Take(30).Include(m=> m.Sender);
+            var messages = await db.Messages.OrderByDescending(m => m.When).Take(30).Include(m=> m.Sender).ToArrayAsync();
             return View("Chat",messages);
         }
-        public async Task<IActionResult> Create(string name, string text)
+        public async Task<IActionResult> Create(string message)
         {
             var u = await um.GetUserAsync(User);
-            Message m = new Message(u, text);
+            Message m = new Message(u, message);
             db.Messages.Add(m);
             await db.SaveChangesAsync();
             return Ok();

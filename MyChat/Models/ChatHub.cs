@@ -8,7 +8,7 @@ namespace MyChat.Models
     public class ChatHub: Hub
     {
         UserManager<AppUser> um;
-        public async Task Send(string userName,string messageText)
+        public async Task Send(object message)
         {
             AppUser user = await um.FindByNameAsync(userName);
             string avatarPath = user.AvatarPath;

@@ -13,6 +13,7 @@ namespace MyChat.Data
         public string SenderName { get; set; }
         [Required]
         public string Text { get; set; }
+        public string ShortDate { get; set; }
         [Required]
         public DateTime When { get; set; }
 
@@ -25,6 +26,7 @@ namespace MyChat.Data
             SenderName = u.UserName;
             Text = text;
             When = DateTime.Now;
+            ShortDate = When.ToShortTimeString();
         }
     }
 }
