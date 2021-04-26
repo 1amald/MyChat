@@ -10,8 +10,8 @@ using MyChat.Data;
 namespace MyChat.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210423171736_mig2")]
-    partial class mig2
+    [Migration("20210425231341_mig1")]
+    partial class mig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -236,17 +236,20 @@ namespace MyChat.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("SenderName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(256)");
-
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime>("When")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("SenderName");
+                    b.HasIndex("UserName");
 
                     b.ToTable("Messages");
                 });
@@ -306,7 +309,7 @@ namespace MyChat.Migrations
                 {
                     b.HasOne("MyChat.Data.AppUser", "Sender")
                         .WithMany("Messages")
-                        .HasForeignKey("SenderName")
+                        .HasForeignKey("UserName")
                         .HasPrincipalKey("UserName")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

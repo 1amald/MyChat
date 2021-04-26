@@ -50,13 +50,13 @@ namespace MyChat.Controllers
             }
             return View("Profile",u);
         }
-
+        [Authorize]
         public async Task<JsonResult> GetMoreMessages(int skipCount, int takeCount)
         {
-            var messages = db.Messages.OrderByDescending(m => m.When).Skip(skipCount).Take(takeCount);
+            var messages = await db.Messages.OrderByDescending(m => m.When).Skip(skipCount).Take(takeCount).ToArrayAsync();
             var result = from m in messages
-                         join u in db.Users on m.SenderName equals u.UserName
-                         select new { senderName = m.SenderName, text = m.Text, shortDate = m.ShortDate, avatarPath = u.AvatarPath };
+                         join u in db.Users on m.UserName equals u.UserName
+                         select new { userName = m.UserName, text = m.Text, when = m.When,shortDate = m.When.ToShortTimeString(), avatarPath = u.AvatarPath };
                            
             return Json(result);
         }
@@ -64,17 +64,10 @@ namespace MyChat.Controllers
         [Authorize]
         public async Task<IActionResult> Chat()
         {
-            var messages = await db.Messages.OrderByDescending(m => m.When).Take(30).Include(m=> m.Sender).ToArrayAsync();
+            var messages = await db.Messages.OrderByDescending(m => m.When).Take(10).Include(m=> m.Sender).ToArrayAsync();
             return View("Chat",messages);
         }
-        public async Task<IActionResult> Create(string message)
-        {
-            var u = await um.GetUserAsync(User);
-            Message m = new Message(u, message);
-            db.Messages.Add(m);
-            await db.SaveChangesAsync();
-            return Ok();
-        }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -1,17 +1,29 @@
-﻿function addMessageFirst(row) {
+﻿let messagesOnPage = 0;
+let fullDialog = false;
+
+class Message {
+    constructor(username, text, when) {
+        this.userName = username;
+        this.text = text;
+        this.shortDate = null;
+        this.avatarPath = null;
+        this.when = when;
+    }
+}
+
+function addMessageFirst(row) {
     
     var firstChild = chatroom.firstChild;
     chatroom.insertBefore(row, firstChild);
+    messagesOnPage++;
 }
 
 function addMessageLast(row) {
     chatroom.appendChild(row);
+    messagesOnPage++;
 }
 
-function createMessageRow(name,text,avatar) {
-    var currentdate = new Date();
-    let dateString = currentdate.toLocaleString('ru-RU', { hour: 'numeric', minute: 'numeric', hour12: false });
-    //перечисление элементов сообщения
+function createMessageRow(message) {
     let row = document.createElement('div');
     let img = document.createElement('img');
     let messageBlock = document.createElement('div');
@@ -26,14 +38,14 @@ function createMessageRow(name,text,avatar) {
     spanForText.className = 'message-text-chat';
     spanWhen.className = 'message-when-chat';
 
-    spanForText.innerHTML = text;
-    spanWhen.innerHTML = dateString;
+    spanForText.innerHTML = message.text;
+    spanWhen.innerHTML = message.shortDate;
 
     messageBlock.appendChild(divUserName);
     divUserName.appendChild(spanForUserName);
     messageBlock.appendChild(spanForText);
 
-    if (name == currentUserName) {
+    if (message.userName == currentUserName) {
         row.className = 'row-right-chat';
         row.appendChild(spanWhen);
         row.appendChild(messageBlock);
@@ -41,25 +53,54 @@ function createMessageRow(name,text,avatar) {
     }
     else {
         row.className = 'row-chat';
-        aImg.href = 'https://localhost:44354/Home/Profile?name=' + name;;
+        aImg.href = 'https://localhost:44354/Home/Profile?name=' + message.userName;;
         aImg.appendChild(img);
         row.appendChild(aImg);
         row.appendChild(messageBlock);
         row.appendChild(spanWhen);
-        spanForUserName.innerHTML = name;
-        img.src = avatar;
+        spanForUserName.innerHTML = message.userName;
+        img.src = message.avatarPath;
         img.className = 'image-chat';
     }
     return row;
 }
 
-function SendMesageToServer(message) {
-    var formData = new FormData();
-    formData.append('message', message);
-    var request = new XMLHttpRequest();
-    request.open('POST', 'https://localhost:44354/Home/Create');
-    request.send(formData);
+function GetMoreMessages() {
+    let formdata = new FormData();
+    formdata.append('skipCount', messagesOnPage);
+    formdata.append('takeCount', 20);
+    fetch("https://localhost:44354/Home/GetMoreMessages", {
+        method: 'post',
+        body: formdata
+    }).then(response => response.text())
+        .then(result => parseAndAdd(result));
 }
+
+function parseAndAdd(json) {
+    let array = JSON.parse(json);
+    array.forEach(function (message) {
+        addMessageLast(createMessageRow(message));
+    });
+}
+
+function OnSubmitClick() {
+    let messageText = input.value;
+    if (messageText.trim() === '') {
+        return;
+    }
+    input.value = '';
+    let date = new Date();
+    let message = new Message(currentUserName, messageText, date)
+    connection.invoke("Send", message);
+}
+
+let chatWindow = document.getElementById("chatroom");
+
+chatWindow.addEventListener('scroll', function () {
+    if (chatWindow.scrollHeight + chatWindow.scrollTop - chatWindow.clientHeight < 1) {
+        GetMoreMessages();
+    }
+});
 
 document.addEventListener('keyup', function (event) {
     if (event.key == 'Enter') {
@@ -71,32 +112,3 @@ document.addEventListener('keyup', function (event) {
     }
 });
 
-function GetMoreMessages() {
-    var formdata = new FormData();
-    formdata.append('skipCount', messagesOnPage);
-    formdata.append('takeCount', 30);
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://localhost:44354/Home/GetMoreMessages', true);
-    xhr.send(formdata);
-
-    xhr.onreadystatechange = function () {
-        if (xhr.status != 200) { // анализируем HTTP-статус ответа, если статус не 200, то произошла ошибка
-            alert(`Ошибка ${xhr.status}: ${xhr.statusText}`); // Например, 404: Not Found
-        } else { // если всё прошло гладко, выводим результат
-            alert(xhr.responseText);
-            var messages = JSON.parse(xhr.responseText);
-            messages.forEach(function (message) {
-                addMessageLast(createMessageRow(message.senderName, message.text, message.avatarPath));
-            });
-            messagesOnPage += messages.lenght;
-        }
-    };
-}
-
-class Message {
-    constructor(username, text, when) {
-        this.userName = username;
-        this.text = text;
-        this.when = when;
-    }
-}

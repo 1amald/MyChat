@@ -113,7 +113,7 @@ form{
     flex-direction: column-reverse;
     background-color: rgb(227 242 252);
     width: 660px;
-    height: 800px;
+    height: 400px;
     overflow-y: auto;
     overflow-x: hidden;
     border-radius: 15px;

@@ -234,9 +234,8 @@ namespace MyChat.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("SenderName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(256)");
+                    b.Property<string>("AvatarPath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ShortDate")
                         .HasColumnType("nvarchar(max)");
@@ -245,12 +244,16 @@ namespace MyChat.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)");
+
                     b.Property<DateTime>("When")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SenderName");
+                    b.HasIndex("UserName");
 
                     b.ToTable("Messages");
                 });
@@ -310,7 +313,7 @@ namespace MyChat.Migrations
                 {
                     b.HasOne("MyChat.Data.AppUser", "Sender")
                         .WithMany("Messages")
-                        .HasForeignKey("SenderName")
+                        .HasForeignKey("UserName")
                         .HasPrincipalKey("UserName")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -42,20 +42,13 @@
 
 <script>
     const currentUserName = '@User.Identity.Name';
-    let messagesOnPage = 0;
+    const chatroom = document.getElementById('chatroom');
+    const input = document.getElementById('message');
+    const submit = document.getElementById('sendBtn');
 </script>
 <script src="~/js/dist/browser/signalr.min.js"></script>
-<script src="~/js/signalrConnection.js"></script>
 <script src="~/js/chat.js"></script>
+<script src="~/js/signalrConnection.js"></script>
 
-<script>
-    let chatWindow = document.getElementById("chatroom");
-
-    chatWindow.addEventListener('scroll', function () {
-        if (chatWindow.scrollHeight + chatWindow.scrollTop - chatWindow.clientHeight <1) {
-            GetMoreMessages();
-        }
-    });
-</script>
 
 

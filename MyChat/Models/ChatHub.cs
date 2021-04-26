@@ -7,16 +7,21 @@ namespace MyChat.Models
 {
     public class ChatHub: Hub
     {
-        UserManager<AppUser> um;
-        public async Task Send(object message)
+        private readonly UserManager<AppUser> um;
+        AppDbContext db;
+        public async Task Send(Message message)
         {
-            AppUser user = await um.FindByNameAsync(userName);
-            string avatarPath = user.AvatarPath;
-            await Clients.All.SendAsync("Send", userName,messageText,avatarPath);
+            AppUser u = await um.FindByNameAsync(message.UserName);
+            message.AvatarPath = u.AvatarPath;
+            message.ShortDate = message.When.ToShortTimeString();
+            await Clients.All.SendAsync("Send", message);
+            db.Messages.Add(message);
+            await db.SaveChangesAsync();
         }
-        public ChatHub(UserManager<AppUser> userManager)
+        public ChatHub(UserManager<AppUser> userManager,AppDbContext db)
         {
             um = userManager;
+            this.db = db;
         }
     }
 }

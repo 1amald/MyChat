@@ -10,8 +10,8 @@ using MyChat.Data;
 namespace MyChat.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210423154446_mig1")]
-    partial class mig1
+    [Migration("20210425232400_mig2")]
+    partial class mig2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -161,6 +161,7 @@ namespace MyChat.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("AvatarPath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -204,12 +205,14 @@ namespace MyChat.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -233,15 +236,26 @@ namespace MyChat.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("SenderId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("AvatarPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortDate")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Text")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime>("When")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SenderId");
+                    b.HasIndex("UserName");
 
                     b.ToTable("Messages");
                 });
@@ -301,7 +315,10 @@ namespace MyChat.Migrations
                 {
                     b.HasOne("MyChat.Data.AppUser", "Sender")
                         .WithMany("Messages")
-                        .HasForeignKey("SenderId");
+                        .HasForeignKey("UserName")
+                        .HasPrincipalKey("UserName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Sender");
                 });
