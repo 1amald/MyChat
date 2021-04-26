@@ -62,10 +62,10 @@ namespace MyChat.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Chat()
+        public IActionResult Chat()
         {
-            var messages = await db.Messages.OrderByDescending(m => m.When).Take(10).Include(m=> m.Sender).ToArrayAsync();
-            return View("Chat",messages);
+            //var messages = await db.Messages.OrderByDescending(m => m.When).Take(10).Include(m=> m.Sender).ToArrayAsync();
+            return View("Chat");
         }
         
 

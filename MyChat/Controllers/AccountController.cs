@@ -105,63 +105,36 @@ namespace MyChat.Controllers
                 
                 await db.SaveChangesAsync();
             }
-
             return RedirectToAction("Profile","Home");
         }
         [Authorize]
-        public async Task<IActionResult> SetStatus(string status)
+        public async Task SetStatus(string status)
         {
             AppUser u = await _userManager.FindByNameAsync(User.Identity.Name);
             u.Status = status;
             await db.SaveChangesAsync();
-            return View("Settings");
         }
         [Authorize]
-        public async Task<IActionResult> ChangePassword(ChangePasswordPartial model)
+        public async Task<IActionResult> ChangePassword(string currentPassword,string newPassword,string confirmPassword)
         {
-            if(model.NewPassword!= model.ConfirmPassword)
+            if(newPassword != confirmPassword)
             {
-                ModelState.AddModelError("", "Неверное подтверждение пароля");
-                return View("Settings", model);
+                return BadRequest("Пароли не совпадают.");
             }
-            if (ModelState.IsValid)
+            if (newPassword.Length < 4)
             {
-                AppUser user = await _userManager.GetUserAsync(User);
-                if (user != null)
-                {
-                    var _passwordValidator =
-                        HttpContext.RequestServices.GetService(typeof(IPasswordValidator<AppUser>)) as IPasswordValidator<AppUser>;
-                    var _passwordHasher =
-                        HttpContext.RequestServices.GetService(typeof(IPasswordHasher<AppUser>)) as IPasswordHasher<AppUser>;
-
-                    IdentityResult result =
-                        await _passwordValidator.ValidateAsync(_userManager, user, model.NewPassword);
-                    if (result.Succeeded)
-                    {
-                        user.PasswordHash = _passwordHasher.HashPassword(user, model.NewPassword);
-                        await _userManager.UpdateAsync(user);
-                        return Ok();
-                    }
-                    else
-                    {
-                        foreach (var error in result.Errors)
-                        {
-                            ModelState.AddModelError(string.Empty, error.Description);
-                        }
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Пользователь не найден");
-                }
+                return Json("Пароль должен быть не короче 4 символов.");
             }
-            if (ModelState.ErrorCount != 0)
+            AppUser currentUser = await _userManager.GetUserAsync(User);
+            IdentityResult result =
+                await _userManager.ChangePasswordAsync(currentUser, currentPassword, newPassword);
+            if (result.Succeeded)
             {
-                return View("Settings", model);
+                return Ok();
             }
             else
             {
-                return Ok();
+                return BadRequest("Неверный текущий пароль.");
             }
         }
 

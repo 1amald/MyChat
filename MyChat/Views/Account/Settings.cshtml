@@ -1,9 +1,16 @@
-﻿@model MyChat.Models.Account.ChangePasswordPartial
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-<script src="~/js/croppie.js"></script> 
-<link rel="stylesheet" href="~/css/croppie.css">
-
+﻿<link rel="stylesheet" href="~/css/croppie.css">
+<div class="alert alert-success collapse fade show my-class over" role="alert" id="success">
+    <strong>Отлично!</strong> Все изменения сохранены.
+    <button type="button" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="alert alert-danger collapse fade show my-class over" role="alert" id="danger">
+    <strong>Ошибка! </strong><span id="spanDanger">Изменения не сохранены.</span>
+    <button type="button" class="close">
+        <span aria-hidden="true" >&times;</span>
+    </button>
+</div>
 
 <div class="settings-div">
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -19,8 +26,9 @@
                     <div>
                         <div>
                             <div id="main-cropper"></div>
-                            <a class="button btn btn-primary btn-block actionSelect">
-                                <input type="file" id="select" value="Choose Image" accept="image/*">
+                            <a class="actionSelect">
+                                <label for="select" class="button btn btn-primary btn-block">Выбрать фотографию</label>
+                                <input type="file" id="select" value="Choose Image" accept="image/*" style="display: none">
                             </a>
                         </div>
                     </div>
@@ -32,16 +40,11 @@
             </div>
         </div>
     </div>
-
-    
-
     <div class="settings-block">
         <form class="form-group btn-block">
             <p class="settings-text">Сменить статус</p>
-            <p>
-                <textarea class="form-control margin-top-5 btn-block" name="status" id="input"></textarea>
-            </p>
-            <button class="btn btn-primary btn-block margin-top-5" type="submit" id="sendBtn">Поменять статус</button>
+            <textarea class="form-control margin-top-5 btn-block" name="status" id="inputStatus" maxlength="300"></textarea>
+            <button class="btn btn-primary btn-block margin-top-5" type="button" id="sendStatus">Поменять статус</button>
         </form>
     </div>
     <div class="settings-block">
@@ -54,64 +57,25 @@
     </div>
     <div class="settings-block">
         <p class="settings-text">Сменить пароль</p>
-        <form class="form-group btn-block" method="post" asp-controller="Account" asp-action="ChangePassword">
+        <form class="form-group btn-block">
             <div class="form-group">
-                <input asp-for="CurrentPassword" class="form-control margin-top-5 btn-block" placeholder="Текущий пароль" />
-                <span asp-validation-for="CurrentPassword"></span>
+                <input  class="form-control margin-top-5 btn-block" placeholder="Текущий пароль" id="currentPassword" required type="password"/>
             </div>
             <div class="form-group">
-                <input asp-for="NewPassword" class="form-control margin-top-5 btn-block" placeholder="Новый пароль" />
-                <span asp-validation-for="NewPassword"></span>
+                <input class="form-control margin-top-5 btn-block" placeholder="Новый пароль" id="newPassword" required type="password"/>
             </div>
             <div class="form-group">
-                <input asp-for="ConfirmPassword" class="form-control margin-top-5 btn-block" placeholder="Подтверждение пароля" />
-                <span asp-validation-for="ConfirmPassword"></span>
+                <input class="form-control margin-top-5 btn-block" placeholder="Подтверждение пароля" id="confirmPassword" required type="password"/>
             </div>
-
-            <button class="btn btn-primary btn-block margin-top-5">Сменить пароль</button>
+            <button type="button" class="btn btn-primary btn-block margin-top-5" id="sendPassword">Сменить пароль</button>
         </form>
     </div>
     <div class="settings-block">
         <a class="btn btn-outline-danger btn-block" href="@Url.Action("Logout","Account")">Выйти из аккаунта</a>
     </div>
-
-
-    <script>
-        var basic;
-        showCrop();
-        function showCrop() {
-            basic = $('#main-cropper').croppie({
-                viewport: { width: 400, height: 400 },
-                boundary: { width: 450, height: 450 },
-                showZoomer: false
-            });
-        }
-        function readFile(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#main-cropper').croppie('bind', {
-                        url: e.target.result
-                    });
-                }
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        $('.actionSelect input').on('change', function () { readFile(this); });
-        $('.actionUpload').on('click', function () {
-            basic.croppie('result', 'blob').then(async function (blob) {
-                var formData = new FormData();
-                formData.append('filename', 'test.jpg');
-                formData.append('blob', blob);
-                var request = new XMLHttpRequest();
-                request.open('POST', url);
-                request.send(formData);
-            });
-        });
-    </script>
 </div>
 
+<script src="~/js/croppie.js"></script>
+<script src="~/js/settings.js"></script>
 
 

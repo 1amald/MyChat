@@ -1,5 +1,6 @@
 ﻿let messagesOnPage = 0;
 let fullDialog = false;
+GetMoreMessages();
 
 class Message {
     constructor(username, text, when) {

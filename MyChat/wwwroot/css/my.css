@@ -108,23 +108,31 @@ form{
     text-align: center;
 }
 
+.header-chat {
+    background-color: #1b6ec2;
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+    width: 660px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    margin:auto;
+}
 .background-chat {
     display: flex;
     flex-direction: column-reverse;
     background-color: rgb(227 242 252);
     width: 660px;
-    height: 400px;
+    height: 770px;
     overflow-y: auto;
     overflow-x: hidden;
-    border-radius: 15px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
     border-style: solid;
     border-width: 1px;
+    border-top: none;
     border-bottom: none;
     border-color: deepskyblue;
     margin: auto;
-    margin-top: 10px;
+    margin-top: 0px;
     padding:15px 10px 10px 20px;
 }
 

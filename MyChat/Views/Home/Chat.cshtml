@@ -1,39 +1,6 @@
-﻿@model IEnumerable<MyChat.Data.Message>
-@{ 
-}
+﻿<div class="header-chat"><span style="color: white">Общий чат</span></div>
 <div class="background-chat" id="chatroom">
-    @if (Model != null)
-    {
-        foreach (var m in Model)
-        {
-            if (m.Sender.UserName != User.Identity.Name)
-            {
-                @:
-                <div class="row-chat">
-                    <a href="@Url.Action("Profile","Home",new {name = m.Sender.UserName})">
-                        <img src="@m.Sender.AvatarPath" alt="Alternate Text" class="image-chat" />
-                    </a>
-                    <div class="message-block-chat">
-                        <div class="user-name-chat"><span>@m.Sender.UserName</span></div>
-                        <span class="message-text-chat">@m.Text</span>
-                    </div>
-                    <span class="message-when-chat">@m.When.ToShortTimeString()</span>
-                </div>
-            }
-            else
-            {
-                @:
-                <div class="row-right-chat">
-                    <span class="message-when-chat">@m.When.ToShortTimeString()</span>
-                    <div class="message-block-chat">
-                        <div class="user-name-chat"><span>Вы</span></div>
-                        <span class="message-text-chat">@m.Text</span>
-                    </div>
-                </div>
-            }
-
-        }
-    }
+    
 </div>
 <div style="display: flex;justify-content: center;margin:auto">
     <textarea class="form-control" style="width: 558px; height: 50px;" placeholder="Введите сообщение" id="message"></textarea>
