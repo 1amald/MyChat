@@ -123,7 +123,7 @@ namespace MyChat.Controllers
             }
             if (newPassword.Length < 4)
             {
-                return Json("Пароль должен быть не короче 4 символов.");
+                return BadRequest("Пароль должен быть не короче 4 символов.");
             }
             AppUser currentUser = await _userManager.GetUserAsync(User);
             IdentityResult result =

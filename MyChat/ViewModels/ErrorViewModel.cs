@@ -1,6 +1,4 @@
-using System;
-
-namespace MyChat.Models
+﻿namespace MyChat.ViewModels
 {
     public class ErrorViewModel
     {

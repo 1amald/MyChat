@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MyChat.Core;
 using MyChat.Models;
+using MyChat.ViewModels;
 using System;
 using System.Diagnostics;
 
