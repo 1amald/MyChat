@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MyChat.Data;
+using MyChat.Core;
 
-namespace MyChat.Migrations
+namespace MyChat.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -150,7 +150,7 @@ namespace MyChat.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("MyChat.Data.AppUser", b =>
+            modelBuilder.Entity("MyChat.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -227,7 +227,7 @@ namespace MyChat.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("MyChat.Data.Message", b =>
+            modelBuilder.Entity("MyChat.Models.Message", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -235,9 +235,6 @@ namespace MyChat.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AvatarPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ShortDate")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Text")
@@ -269,7 +266,7 @@ namespace MyChat.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("MyChat.Data.AppUser", null)
+                    b.HasOne("MyChat.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -278,7 +275,7 @@ namespace MyChat.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("MyChat.Data.AppUser", null)
+                    b.HasOne("MyChat.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -293,7 +290,7 @@ namespace MyChat.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MyChat.Data.AppUser", null)
+                    b.HasOne("MyChat.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -302,16 +299,16 @@ namespace MyChat.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("MyChat.Data.AppUser", null)
+                    b.HasOne("MyChat.Models.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MyChat.Data.Message", b =>
+            modelBuilder.Entity("MyChat.Models.Message", b =>
                 {
-                    b.HasOne("MyChat.Data.AppUser", "Sender")
+                    b.HasOne("MyChat.Models.AppUser", "Sender")
                         .WithMany("Messages")
                         .HasForeignKey("UserName")
                         .HasPrincipalKey("UserName")
@@ -321,7 +318,7 @@ namespace MyChat.Migrations
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("MyChat.Data.AppUser", b =>
+            modelBuilder.Entity("MyChat.Models.AppUser", b =>
                 {
                     b.Navigation("Messages");
                 });

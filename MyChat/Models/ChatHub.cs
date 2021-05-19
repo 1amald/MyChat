@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
-using MyChat.Data;
+using MyChat.Core;
 using System.Threading.Tasks;
 
 namespace MyChat.Models
@@ -8,20 +8,19 @@ namespace MyChat.Models
     public class ChatHub: Hub
     {
         private readonly UserManager<AppUser> um;
-        AppDbContext db;
+        private readonly IMessageRepository messageRepository;
         public async Task Send(Message message)
         {
             AppUser u = await um.FindByNameAsync(message.UserName);
             message.AvatarPath = u.AvatarPath;
-            message.ShortDate = message.When.ToShortTimeString();
+            message.Sender = u;
             await Clients.All.SendAsync("Send", message);
-            db.Messages.Add(message);
-            await db.SaveChangesAsync();
+            messageRepository.AddMessage(message);
         }
-        public ChatHub(UserManager<AppUser> userManager,AppDbContext db)
+        public ChatHub(UserManager<AppUser> userManager, IMessageRepository messageRepository)
         {
             um = userManager;
-            this.db = db;
+            this.messageRepository = messageRepository;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MyChat.Migrations
+namespace MyChat.Core.Migrations
 {
     public partial class mig1 : Migration
     {
@@ -164,7 +164,9 @@ namespace MyChat.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(type: "nvarchar(256)", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    When = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    When = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ShortDate = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AvatarPath = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MyChat.Data;
+using MyChat.Core;
 using MyChat.Models;
 
 namespace MyChat
@@ -21,6 +21,8 @@ namespace MyChat
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IMessageRepository, MessageRepository>();
+
             services.AddSignalR();
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

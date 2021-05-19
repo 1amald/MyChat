@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace MyChat.Data
+namespace MyChat.Models
 {
     public class AppUser : IdentityUser
     {

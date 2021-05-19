@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MyChat.Data;
 using MyChat.Models;
 using MyChat.Models.Account;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Identity.Core;
+using MyChat.Core;
 
 namespace MyChat.Controllers
 {

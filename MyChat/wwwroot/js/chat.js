@@ -6,7 +6,7 @@ class Message {
     constructor(username, text, when) {
         this.userName = username;
         this.text = text;
-        this.shortDate = null;
+        this.when = null;
         this.avatarPath = null;
         this.when = when;
     }
@@ -40,7 +40,7 @@ function createMessageRow(message) {
     spanWhen.className = 'message-when-chat';
 
     spanForText.innerHTML = message.text;
-    spanWhen.innerHTML = message.shortDate;
+    spanWhen.innerHTML = message.when;
 
     messageBlock.appendChild(divUserName);
     divUserName.appendChild(spanForUserName);
@@ -69,8 +69,8 @@ function createMessageRow(message) {
 function GetMoreMessages() {
     let formdata = new FormData();
     formdata.append('skipCount', messagesOnPage);
-    formdata.append('takeCount', 20);
-    fetch("https://localhost:44354/Home/GetMoreMessages", {
+    formdata.append('takeCount', 15);
+    fetch("https://localhost:44354/Home/GetMessages", {
         method: 'post',
         body: formdata
     }).then(response => response.text())

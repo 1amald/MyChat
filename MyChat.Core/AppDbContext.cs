@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MyChat.Models;
+using System;
 
-namespace MyChat.Data
+namespace MyChat.Core
 {
     public class AppDbContext : IdentityDbContext<AppUser>
     {
@@ -14,7 +16,7 @@ namespace MyChat.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<Message>().HasOne(m => m.Sender).WithMany(u => u.Messages).HasForeignKey(m => m.UserName).HasPrincipalKey(u=> u.UserName);
+            builder.Entity<Message>().HasOne(m => m.Sender).WithMany(u => u.Messages).HasForeignKey(m => m.UserName).HasPrincipalKey(u => u.UserName);
         }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-
-namespace MyChat.Data
+namespace MyChat.Models
 {
     public class Message
     {
@@ -13,15 +12,12 @@ namespace MyChat.Data
         public string Text { get; set; }
         [Required]
         public DateTime When { get; set; }
-
-        public string ShortDate { get; set; }
         public string AvatarPath { get; set; }
-
         public virtual AppUser Sender { get; set; }
 
         public Message()
         {
-            
+
         }
     }
 }

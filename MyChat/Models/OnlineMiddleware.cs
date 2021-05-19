@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using MyChat.Data;
+using MyChat.Core;
 using System;
 using System.Threading.Tasks;
 
