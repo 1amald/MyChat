@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using MyChat.Core;
+using MyChat.Models;
 using System.Threading.Tasks;
 
-namespace MyChat.Models
+namespace MyChat.Hubs
 {
-    public class ChatHub: Hub
+    public class ChatHub : Hub
     {
         private readonly UserManager<AppUser> um;
         private readonly IMessageRepository messageRepository;
