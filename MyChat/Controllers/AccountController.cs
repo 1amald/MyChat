@@ -5,10 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyChat.Models;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Identity.Core;
-using MyChat.Core;
 using MyChat.ViewModels;
 
 namespace MyChat.Controllers
@@ -17,40 +14,31 @@ namespace MyChat.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly AppDbContext db;
         IWebHostEnvironment _appEnvironment;
 
-        public AccountController(UserManager<AppUser> userManager,SignInManager<AppUser> singInManager,AppDbContext context, IWebHostEnvironment appEnvironment)
+        public AccountController(UserManager<AppUser> userManager,SignInManager<AppUser> singInManager,IWebHostEnvironment appEnvironment)
         {
             _userManager = userManager;
             _signInManager = singInManager;
             _appEnvironment = appEnvironment;
-            db = context;
         }
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            AppUser u = new AppUser();
-
-            if (model.LoginOrEmail.Contains('@'))
+            if (ModelState.IsValid)
             {
-                u = db.Users.FirstOrDefault(user => user.NormalizedEmail == model.LoginOrEmail.ToUpper());
-            }
-            else
-            {
-                u= db.Users.FirstOrDefault(user => user.UserName == model.LoginOrEmail);
-            }
-            if (u != null)
-            {
-                var result = await _signInManager.PasswordSignInAsync(u, model.Password, model.RememberMe, false);
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Profile", "Home");
                 }
+                else
+                {
+                    ModelState.AddModelError("", "Wrong login or password");
+                }
             }
 
-            ModelState.AddModelError("", "Неправильный логин и (или) пароль");
             return View(model);
         }
 
@@ -102,8 +90,7 @@ namespace MyChat.Controllers
                     await blob.CopyToAsync(fileStream);
                 }
                 u.AvatarPath = projectPath;
-                
-                await db.SaveChangesAsync();
+                await _userManager.UpdateAsync(u);
             }
             return RedirectToAction("Profile","Home");
         }
@@ -112,21 +99,21 @@ namespace MyChat.Controllers
         {
             AppUser u = await _userManager.FindByNameAsync(User.Identity.Name);
             u.Status = status;
-            await db.SaveChangesAsync();
+            await _userManager.UpdateAsync(u);
         }
         [Authorize]
         public async Task<IActionResult> ChangePassword(string currentPassword,string newPassword,string confirmPassword)
         {
             if(newPassword != confirmPassword)
             {
-                return BadRequest("Пароли не совпадают.");
+                return BadRequest("Password mismatch.");
             }
             if (newPassword.Length < 4)
             {
-                return Json("Пароль должен быть не короче 4 символов.");
+                return Json("Password must be at least 4 characters.");
             }
             AppUser currentUser = await _userManager.GetUserAsync(User);
-            IdentityResult result =
+            var result =
                 await _userManager.ChangePasswordAsync(currentUser, currentPassword, newPassword);
             if (result.Succeeded)
             {
@@ -134,7 +121,7 @@ namespace MyChat.Controllers
             }
             else
             {
-                return BadRequest("Неверный текущий пароль.");
+                return BadRequest("Invalid current password.");
             }
         }
 

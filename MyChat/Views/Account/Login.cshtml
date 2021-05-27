@@ -6,20 +6,20 @@
 
 <div class="div-login">
     <form asp-controller="Account" asp-action="Login" class="form-group form-group-sm" method="post">
-        <p style="text-align: center;font-size: xx-large">Вход</p>
+        <p style="text-align: center;font-size: xx-large">Login</p>
         <div class="error-div" asp-validation-summary="ModelOnly"></div>
         <div class="form-group">
-            <input asp-for="LoginOrEmail" class="form-control" id="login" placeholder="Никнейм или Email">
+            <input asp-for="UserName" class="form-control" id="login" placeholder="Login">
         </div>
         <div class="form-group">
-            <input asp-for="Password" class="form-control" placeholder="Пароль">
+            <input asp-for="Password" class="form-control" placeholder="Password">
         </div>
         <div class="form-group">
             <input asp-for="RememberMe" />
             <label asp-for="RememberMe"></label>
         </div>
-        <button type="submit" class="btn btn-primary">Войти</button>
-        <a style="text-align: center" asp-controller="Account" asp-action="Register">У меня нет аккаунта</a>
+        <button type="submit" class="btn btn-primary">Login</button>
+        <a style="text-align: center" asp-controller="Account" asp-action="Register">I am new here</a>
     </form>
 </div>
 

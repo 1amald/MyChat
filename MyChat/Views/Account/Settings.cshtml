@@ -1,12 +1,12 @@
 ﻿<link rel="stylesheet" href="~/css/croppie.css">
 <div class="alert alert-success collapse fade show my-class over" role="alert" id="success">
-    <strong>Отлично!</strong> Все изменения сохранены.
+    <strong>Grate!</strong> All changes saved.
     <button type="button" class="close" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="alert alert-danger collapse fade show my-class over" role="alert" id="danger">
-    <strong>Ошибка! </strong><span id="spanDanger">Изменения не сохранены.</span>
+    <strong>Error! </strong><span id="spanDanger">Changes not saved.</span>
     <button type="button" class="close">
         <span aria-hidden="true" >&times;</span>
     </button>
@@ -17,7 +17,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Смена аватара</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Change avatar</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -27,51 +27,51 @@
                         <div>
                             <div id="main-cropper"></div>
                             <a class="actionSelect">
-                                <label for="select" class="button btn btn-primary btn-block">Выбрать фотографию</label>
+                                <label for="select" class="button btn btn-primary btn-block">Select photo</label>
                                 <input type="file" id="select" value="Choose Image" accept="image/*" style="display: none">
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                    <button type="button" class="btn btn-primary btn-block actionUpload" data-dismiss="modal">Сохранить и загрузить</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary btn-block actionUpload" data-dismiss="modal">Save and upload</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="settings-block">
         <form class="form-group btn-block">
-            <p class="settings-text">Сменить статус</p>
+            <p class="settings-text">Change status</p>
             <textarea class="form-control margin-top-5 btn-block" name="status" id="inputStatus" maxlength="300"></textarea>
-            <button class="btn btn-primary btn-block margin-top-5" type="button" id="sendStatus">Поменять статус</button>
+            <button class="btn btn-primary btn-block margin-top-5" type="button" id="sendStatus">Change status</button>
         </form>
     </div>
     <div class="settings-block">
         <form class="form-group btn-block">
-            <p class="settings-text">Сменить Аватар</p>
+            <p class="settings-text">Change avatar</p>
             <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal">
-                Сменить аватар
+                Change avatar
             </button>
         </form>
     </div>
     <div class="settings-block">
-        <p class="settings-text">Сменить пароль</p>
+        <p class="settings-text">Change passwrd</p>
         <form class="form-group btn-block">
             <div class="form-group">
-                <input  class="form-control margin-top-5 btn-block" placeholder="Текущий пароль" id="currentPassword" required type="password"/>
+                <input  class="form-control margin-top-5 btn-block" placeholder="Current password" id="currentPassword" required type="password"/>
             </div>
             <div class="form-group">
-                <input class="form-control margin-top-5 btn-block" placeholder="Новый пароль" id="newPassword" required type="password"/>
+                <input class="form-control margin-top-5 btn-block" placeholder="New password" id="newPassword" required type="password"/>
             </div>
             <div class="form-group">
-                <input class="form-control margin-top-5 btn-block" placeholder="Подтверждение пароля" id="confirmPassword" required type="password"/>
+                <input class="form-control margin-top-5 btn-block" placeholder="Confirm password" id="confirmPassword" required type="password"/>
             </div>
-            <button type="button" class="btn btn-primary btn-block margin-top-5" id="sendPassword">Сменить пароль</button>
+            <button type="button" class="btn btn-primary btn-block margin-top-5" id="sendPassword">Change password</button>
         </form>
     </div>
     <div class="settings-block">
-        <a class="btn btn-outline-danger btn-block" href="@Url.Action("Logout","Account")">Выйти из аккаунта</a>
+        <a class="btn btn-outline-danger btn-block" href="@Url.Action("Logout","Account")">Logout</a>
     </div>
 </div>
 

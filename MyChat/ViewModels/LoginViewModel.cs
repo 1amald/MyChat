@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+
 
 namespace MyChat.ViewModels
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "Обязательное поле")]
-        [Display(Name = "Логин или Email")]
-        public string LoginOrEmail { get; set; }
-        [Required(ErrorMessage = "Обязательное поле")]
+        [Required(ErrorMessage = "Required field")]
+        [Display(Name = "Login")]
+        public string UserName { get; set; }
+        [Required(ErrorMessage = "Required field")]
         [DataType(DataType.Password)]
-        [Display(Name = "Пароль")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
-        [Display(Name = "Запомнить меня")]
+        [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
         public string ReturnUrl { get; set; }
     }
