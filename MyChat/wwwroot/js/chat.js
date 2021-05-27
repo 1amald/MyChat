@@ -3,7 +3,7 @@ let fullDialog = false;
 GetMoreMessages();
 
 class Message {
-    constructor(username, text, when) {
+    constructor(username, text) {
         this.userName = username;
         this.text = text;
         this.when = null;
@@ -90,9 +90,7 @@ function OnSubmitClick() {
         return;
     }
     input.value = '';
-    let date = new Date();
-    let message = new Message(currentUserName, messageText, date)
-    connection.invoke("Send", message);
+    connection.invoke("Send", messageText);
 }
 
 let chatWindow = document.getElementById("chatroom");

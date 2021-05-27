@@ -110,11 +110,8 @@ namespace MyChat.Controllers
             }
             if (newPassword.Length < 4)
             {
-<<<<<<< HEAD
+
                 return Json("Password must be at least 4 characters.");
-=======
-                return BadRequest("Пароль должен быть не короче 4 символов.");
->>>>>>> da14d4d9610a1258ec1b1888aa9eb84bd6ee2235
             }
             AppUser currentUser = await _userManager.GetUserAsync(User);
             var result =
@@ -129,6 +126,24 @@ namespace MyChat.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize]
+        public IActionResult ChangeAvatar()
+        {
+            return View();
+        }
+        [HttpGet]
+        [Authorize]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+        [HttpGet]
+        [Authorize]
+        public IActionResult ChangeStatus()
+        {
+            return View();
+        }
         [HttpGet]
         public IActionResult Register()
         {
