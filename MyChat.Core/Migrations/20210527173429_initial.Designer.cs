@@ -10,8 +10,8 @@ using MyChat.Core;
 namespace MyChat.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210519152634_mig1")]
-    partial class mig1
+    [Migration("20210527173429_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -174,9 +174,6 @@ namespace MyChat.Core.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime>("LastAction")
-                        .HasColumnType("datetime2");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");

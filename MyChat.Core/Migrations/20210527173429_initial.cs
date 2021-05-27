@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MyChat.Core.Migrations
 {
-    public partial class mig1 : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,7 +28,6 @@ namespace MyChat.Core.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     AvatarPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastAction = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -165,8 +164,8 @@ namespace MyChat.Core.Migrations
                     UserName = table.Column<string>(type: "nvarchar(256)", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     When = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ShortDate = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AvatarPath = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    AvatarPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ShortDate = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
