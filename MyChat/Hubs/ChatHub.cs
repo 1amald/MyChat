@@ -14,16 +14,9 @@ namespace MyChat.Hubs
         public async Task Send(string messageText)
         {
             AppUser u = await _userManager.GetUserAsync(Context.User);
-            Message m = new Message()
-            await Clients.All.SendAsync("Send", new
-            {
-                UserName = u.UserName,
-                Text = messageText,
-                When = DateTime.Now.ToShortTimeString(),
-                AvatarPath = u.AvatarPath
-            });
-            
-            messageRepository.AddMessage(new Message)
+            Message m = new Message(u.UserName, messageText, u.AvatarPath);
+            await Clients.All.SendAsync("Send", m);
+            messageRepository.AddMessage(m);
         }
         public ChatHub(UserManager<AppUser> userManager, IMessageRepository messageRepository)
         {

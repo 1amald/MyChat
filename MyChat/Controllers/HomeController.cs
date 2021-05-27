@@ -48,11 +48,6 @@ namespace MyChat.Controllers
         {
             return Json(messageRepository.GetMessages(skipCount, takeCount));
         }
-        public IActionResult SaveMessage(Message message)
-        {
-            messageRepository.AddMessage(message);
-            return Ok();
-        }
         [Authorize]
         public IActionResult Chat()
         {

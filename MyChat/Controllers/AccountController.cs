@@ -114,8 +114,7 @@ namespace MyChat.Controllers
                 return Json("Password must be at least 4 characters.");
             }
             AppUser currentUser = await _userManager.GetUserAsync(User);
-            var result =
-                await _userManager.ChangePasswordAsync(currentUser, currentPassword, newPassword);
+            var result = await _userManager.ChangePasswordAsync(currentUser, currentPassword, newPassword);
             if (result.Succeeded)
             {
                 return Ok();

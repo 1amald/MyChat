@@ -13,11 +13,21 @@ namespace MyChat.Models
         [Required]
         public DateTime When { get; set; }
         public string AvatarPath { get; set; }
+        public string ShortDate { get; set; }
         public virtual AppUser Sender { get; set; }
 
         public Message()
         {
 
+        }
+
+        public Message(string userName,string text, string avatarPath)
+        {
+            UserName = userName;
+            Text = text;
+            AvatarPath = avatarPath;
+            When = DateTime.Now;
+            ShortDate = When.ToShortTimeString();
         }
         
     }

@@ -2,15 +2,7 @@
 let fullDialog = false;
 GetMoreMessages();
 
-class Message {
-    constructor(username, text) {
-        this.userName = username;
-        this.text = text;
-        this.when = null;
-        this.avatarPath = null;
-        this.when = when;
-    }
-}
+
 
 function addMessageFirst(row) {
     
@@ -40,7 +32,7 @@ function createMessageRow(message) {
     spanWhen.className = 'message-when-chat';
 
     spanForText.innerHTML = message.text;
-    spanWhen.innerHTML = message.when;
+    spanWhen.innerHTML = message.shortDate;
 
     messageBlock.appendChild(divUserName);
     divUserName.appendChild(spanForUserName);
