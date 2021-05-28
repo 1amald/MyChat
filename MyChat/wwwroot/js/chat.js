@@ -42,7 +42,7 @@ function createMessageRow(message) {
         row.className = 'row-right-chat';
         row.appendChild(spanWhen);
         row.appendChild(messageBlock);
-        spanForUserName.innerHTML = 'Вы';
+        spanForUserName.innerHTML = 'You';
     }
     else {
         row.className = 'row-chat';

@@ -159,8 +159,7 @@ namespace MyChat.Core.Migrations
                 name: "Messages",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     When = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -176,6 +175,33 @@ namespace MyChat.Core.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "UserName",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "AvatarPath", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Status", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "647BACBA-FE1F-436A-9892-36B34034EC85", 0, "/Avatars/orlov_a.jpg", "f99d07f8-3a88-4c39-a4d4-6567db2720af", "somemail@gmail.com", true, false, null, "SOMEMAIL@GMAIL.COM", "ORLOV_A", "AQAAAAEAACcQAAAAEHo9sJnqFsxQ3Mikx9h0du8JjmZJJ6LPdtzfiRhJhkmBNgdN0i1hJ+a4+ZRTCXFdpQ==", null, false, "", "Action may not always bring happiness; but there is no happiness without action.", false, "orlov_a" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "AvatarPath", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Status", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "19432DCC-B055-4621-9D83-53C5CAD7DC26", 0, "/Avatars/milena.jpg", "413a6de9-fb84-4874-8dc9-0b4cd5d57ea1", "somemail1@gmail.com", true, false, null, "SOMEMAIL1@GMAIL.COM", "MILENA", "AQAAAAEAACcQAAAAEObgmq8v3RC91BDd/N15NlIf39Qg7DnVGCoSszRMoXljyvlEFLzRb8RoQL2c+4wMvA==", null, false, "", "Life is a dream for the wise, a game for the fool, a comedy for the rich, a tragedy for the poor.", false, "milena" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "AvatarPath", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Status", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "74EE573F-2692-434E-B9BE-C83506CEA3A3", 0, "/Avatars/olofmaister.jpg", "c0217e99-a529-40ba-ae65-ceab215fba8b", "somemail2@gmail.com", true, false, null, "SOMEMAIL2@GMAIL.COM", "OLOFMAISTER", "AQAAAAEAACcQAAAAELcMLgJ0E5kh9I+VT442AxnpxHrwohp9oi2y0oT39O5wZJbJtHLOsdOuTSZrlQ0I0A==", null, false, "", "Energy and persistence conquer all things.", false, "olofmaister" });
+
+            migrationBuilder.InsertData(
+                table: "Messages",
+                columns: new[] { "Id", "AvatarPath", "ShortDate", "Text", "UserName", "When" },
+                values: new object[,]
+                {
+                    { new Guid("e693030d-9990-47b8-b1c8-1a2ce22c78da"), "/Avatars/orlov_a.jpg", "22:03", "How are u, guys?", "orlov_a", new DateTime(2021, 5, 28, 22, 3, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("6e45097f-8128-4a66-a56b-067b3b1aee97"), "/Avatars/milena.jpg", "22:02", "Hey! Glad to see your message!", "milena", new DateTime(2021, 5, 28, 22, 2, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("2cfd6191-29ac-4abf-a14a-7c1f3a23d50f"), "/Avatars/milena.jpg", "22:04", "It was a very stressful day, but now i feel great! What about u? And u olof?", "milena", new DateTime(2021, 5, 28, 22, 4, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("182611af-4e9a-4080-bfed-812962dc6398"), "/Avatars/olofmaister.jpg", "22:01", "Hey everyone!", "olofmaister", new DateTime(2021, 5, 28, 22, 1, 0, 0, DateTimeKind.Unspecified) },
+                    { new Guid("93e56f39-8e85-487e-8682-ed14929fa37a"), "/Avatars/olofmaister.jpg", "22:05", "Same as you!", "olofmaister", new DateTime(2021, 5, 28, 22, 5, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.CreateIndex(

@@ -10,7 +10,7 @@ using MyChat.Core;
 namespace MyChat.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210527173429_initial")]
+    [Migration("20210528195302_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -224,14 +224,69 @@ namespace MyChat.Core.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "647BACBA-FE1F-436A-9892-36B34034EC85",
+                            AccessFailedCount = 0,
+                            AvatarPath = "/Avatars/orlov_a.jpg",
+                            ConcurrencyStamp = "f99d07f8-3a88-4c39-a4d4-6567db2720af",
+                            Email = "somemail@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SOMEMAIL@GMAIL.COM",
+                            NormalizedUserName = "ORLOV_A",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHo9sJnqFsxQ3Mikx9h0du8JjmZJJ6LPdtzfiRhJhkmBNgdN0i1hJ+a4+ZRTCXFdpQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            Status = "Action may not always bring happiness; but there is no happiness without action.",
+                            TwoFactorEnabled = false,
+                            UserName = "orlov_a"
+                        },
+                        new
+                        {
+                            Id = "19432DCC-B055-4621-9D83-53C5CAD7DC26",
+                            AccessFailedCount = 0,
+                            AvatarPath = "/Avatars/milena.jpg",
+                            ConcurrencyStamp = "413a6de9-fb84-4874-8dc9-0b4cd5d57ea1",
+                            Email = "somemail1@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SOMEMAIL1@GMAIL.COM",
+                            NormalizedUserName = "MILENA",
+                            PasswordHash = "AQAAAAEAACcQAAAAEObgmq8v3RC91BDd/N15NlIf39Qg7DnVGCoSszRMoXljyvlEFLzRb8RoQL2c+4wMvA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            Status = "Life is a dream for the wise, a game for the fool, a comedy for the rich, a tragedy for the poor.",
+                            TwoFactorEnabled = false,
+                            UserName = "milena"
+                        },
+                        new
+                        {
+                            Id = "74EE573F-2692-434E-B9BE-C83506CEA3A3",
+                            AccessFailedCount = 0,
+                            AvatarPath = "/Avatars/olofmaister.jpg",
+                            ConcurrencyStamp = "c0217e99-a529-40ba-ae65-ceab215fba8b",
+                            Email = "somemail2@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SOMEMAIL2@GMAIL.COM",
+                            NormalizedUserName = "OLOFMAISTER",
+                            PasswordHash = "AQAAAAEAACcQAAAAELcMLgJ0E5kh9I+VT442AxnpxHrwohp9oi2y0oT39O5wZJbJtHLOsdOuTSZrlQ0I0A==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            Status = "Energy and persistence conquer all things.",
+                            TwoFactorEnabled = false,
+                            UserName = "olofmaister"
+                        });
                 });
 
             modelBuilder.Entity("MyChat.Models.Message", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AvatarPath")
                         .HasColumnType("nvarchar(max)");
@@ -255,6 +310,53 @@ namespace MyChat.Core.Migrations
                     b.HasIndex("UserName");
 
                     b.ToTable("Messages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("182611af-4e9a-4080-bfed-812962dc6398"),
+                            AvatarPath = "/Avatars/olofmaister.jpg",
+                            ShortDate = "22:01",
+                            Text = "Hey everyone!",
+                            UserName = "olofmaister",
+                            When = new DateTime(2021, 5, 28, 22, 1, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = new Guid("6e45097f-8128-4a66-a56b-067b3b1aee97"),
+                            AvatarPath = "/Avatars/milena.jpg",
+                            ShortDate = "22:02",
+                            Text = "Hey! Glad to see your message!",
+                            UserName = "milena",
+                            When = new DateTime(2021, 5, 28, 22, 2, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = new Guid("e693030d-9990-47b8-b1c8-1a2ce22c78da"),
+                            AvatarPath = "/Avatars/orlov_a.jpg",
+                            ShortDate = "22:03",
+                            Text = "How are u, guys?",
+                            UserName = "orlov_a",
+                            When = new DateTime(2021, 5, 28, 22, 3, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = new Guid("2cfd6191-29ac-4abf-a14a-7c1f3a23d50f"),
+                            AvatarPath = "/Avatars/milena.jpg",
+                            ShortDate = "22:04",
+                            Text = "It was a very stressful day, but now i feel great! What about u? And u olof?",
+                            UserName = "milena",
+                            When = new DateTime(2021, 5, 28, 22, 4, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = new Guid("93e56f39-8e85-487e-8682-ed14929fa37a"),
+                            AvatarPath = "/Avatars/olofmaister.jpg",
+                            ShortDate = "22:05",
+                            Text = "Same as you!",
+                            UserName = "olofmaister",
+                            When = new DateTime(2021, 5, 28, 22, 5, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
